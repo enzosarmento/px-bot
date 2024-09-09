@@ -10,7 +10,7 @@ object CommandHandler {
 
     suspend fun handleCommand(event: GuildChatInputCommandInteractionCreateEvent) {
         when (event.interaction.command.rootName) {
-            "play", "resume", "pause", "stop", "connect", "leave" -> MusicCommands.handleMusicCommands(event, musicService)
+            "play", "pause", "stop", "connect", "leave" -> MusicCommands.handleMusicCommands(event, musicService)
             //Novos comandos
         }
     }
