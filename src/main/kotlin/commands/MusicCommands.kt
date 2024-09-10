@@ -36,6 +36,9 @@ object MusicCommands {
             "connect" -> {
                 connect(event, ack, link)
             }
+            "skip" -> {
+                skipTrack(link, ack)
+            }
             "play" -> {
                 val query = event.interaction.command.options["musica"]?.value.toString()
                 val search = if (query.startsWith("http")) query else "ytsearch:$query"
@@ -114,5 +117,22 @@ object MusicCommands {
             return nextTrack
         }
         return null
+    }
+
+    private suspend fun skipTrack(link: Link, ack: DeferredPublicMessageInteractionResponseBehavior) {
+        if (musicQueue.isEmpty()) {
+            ack.respond { content = "A fila está vazia, não há músicas para pular" }
+            return
+        }
+
+        val nextTrack = playNextTrack(link)
+
+        val responseMessage = if (nextTrack != null) {
+            "Próxima música: ${nextTrack.info.title}"
+        } else {
+            "A fila está vazia, não há mais músicas para tocar!"
+        }
+
+        ack.respond { content = responseMessage }
     }
 }

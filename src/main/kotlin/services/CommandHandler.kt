@@ -9,9 +9,9 @@ object CommandHandler {
     private val musicService = MusicService(lavalink)
 
     suspend fun handleCommand(event: GuildChatInputCommandInteractionCreateEvent) {
+
         when (event.interaction.command.rootName) {
-            "play", "pause", "stop", "connect", "leave" -> MusicCommands.handleMusicCommands(event, musicService)
-            //Novos comandos
+            "play", "pause", "skip", "stop", "connect", "leave" -> MusicCommands.handleMusicCommands(event, musicService)
         }
     }
 }
